@@ -1,35 +1,45 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.css'
+
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      charecter: {}
-    }
-  }
+  constructor() {
+      super()
+      this.state = {
+          loading: true,
+          character: []
+      }
+  };
 
   componentDidMount() {
-    this.setState({loading: true})
-    fetch("https://swapi.co/api/people/1")
-        .then(response => response.json())
-        .then(data => {
-          this.setState({
-            loading: false,
-            charecter: data
+      
+      fetch("https://swapi.co/api/people/?page=2")
+          .then(response => response.json())
+          .then(data => {
+              this.setState({
+                  loading: false,
+                  character: data
+              })
+              console.log(this.state.character.results);        
           })
-        })
   }
 
   render() {
-    const text = this.state.loading ? "loading..." : this.state.charecter.name
     return (
-      <div className="dabba">
-        <p>{text}</p>
-      </div>
-    )
-  }
+      <div className='dabba'>
+        <ul>
+            {
+                this.state.loading ? 'loading...' : this.state.character.results.map( (person, idx) => {
+                    return <li key={idx}>Name: {person.name} || Height: {person.height}</li>
+                })
+            }
+        </ul>
 
+      
+
+      </div>
+    );
+  }
 }
+
 export default App;
