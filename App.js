@@ -7,8 +7,11 @@ class App extends Component {
       super()
       this.state = {
           loading: true,
-          character: []
+          character: [],
+          newChar: []
       }
+
+      this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   componentDidMount() {
@@ -24,18 +27,35 @@ class App extends Component {
           })
   }
 
+  handleSubmit() {
+      let rand = Math.floor(Math.random() * this.state.character.results.length);
+
+    this.setState({
+        loading: false,
+        newChar: this.state.character.results[rand]
+    }) 
+  }
+
   render() {
     return (
       <div className='dabba'>
-        <ul>
-            {
-                this.state.loading ? 'loading...' : this.state.character.results.map( (person, idx) => {
-                    return <li key={idx}>Name: {person.name} || Height: {person.height}</li>
-                })
-            }
-        </ul>
+        <button onClick={this.handleSubmit}>Press to get Charector Info</button>
+        <br />
+        <br />
 
-      
+        <h2>Charector Info</h2>
+        <br />
+        
+        { this.state.loading ? 'Loading...' :  
+            <div>
+                <p>Name: {this.state.newChar.name}</p> 
+                <br />
+                <p>Height: {this.state.newChar.height}</p>
+                <br />
+                <p>Hair-Color: {this.state.newChar.hair_color}</p>
+            </div>
+
+        }
 
       </div>
     );
