@@ -1,2 +1,2 @@
 # API-call-to-Starwars
-Making a successful API call to render star war character name using React
+Program written to make succesful Api calls to an open source starwars http to render random charecter info everytime a user presses the request button. 
